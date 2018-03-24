@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<parametros>
+ <conexion id="1">
+ <ipServer>10.2.2.41</ipServer>
+ <bd>ventaslinea</bd>
+ <pass>adv</pass>
+ <us>root@%</us>
+ </conexion>
+</parametros>
