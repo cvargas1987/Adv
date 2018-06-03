@@ -12,17 +12,17 @@ public class Main {
 	
 	public static void main (String [] args) throws SQLException, IOException {
 		
-		fileAns = args[2]; 
-		String respuesta_ = null; 
-		String msnError = null;
-		fileRespuesta file_respuesta = new fileRespuesta();
-		
 		if (args[0].toLowerCase().equals("v"))
 		{
 			version v = new version();
 			v.consultarVersion();
 			System.exit(0);
 		}
+
+		fileAns = args[2]; 
+		String respuesta_ = null; 
+		String msnError = null;
+		fileRespuesta file_respuesta = new fileRespuesta();
 		
 		if (args.length < 3) {
 			msnError = "ERROR: cantidad invalida de argumentos";
@@ -33,9 +33,7 @@ public class Main {
 			System.out.println(msnError);
 			System.exit(0);
 		}
-		
-			
-			
+
 			System.out.println("Parametros: "+args[0] + " " +  args[1 ] + " " +  args[2])  ;			
 			leerXml xml = new leerXml ();
 			xml.leer();
@@ -53,13 +51,11 @@ public class Main {
 				resultado_T = conexion.getQuery("SELECT * FROM transacciones WHERE fecha BETWEEN " + "'" + args[0]+ "'" +" AND " + "'" +args[1]+ "'"+";");
 				resultado_I = conexion.getQuery("SELECT * FROM transacciones INNER JOIN detalletransacciones ON transacciones.IdTransaccion = detalletransacciones.IdTransaccion WHERE fecha BETWEEN " + "'" + args[0]+ "'" +" AND " + "'" +args[1]+ "'"+";");
 				resultado_P = conexion.getQuery("SELECT * FROM transacciones INNER JOIN formapago ON transacciones.IdTransaccion = formapago.IdTransaccion WHERE fecha BETWEEN " + "'" + args[0]+ "'" +" AND " + "'" +args[1]+ "'"+";");
-				
-				
+
 				guardarTxt file_interfaz_rbo = new guardarTxt();
-				encabT = file_interfaz_rbo.procesarT(resultado_T); 
-				file_interfaz_rbo.procesar_I(resultado_I, encabT);
-				file_interfaz_rbo.procesar_P(resultado_P, encabT);
-				
+				file_interfaz_rbo.procesarT(resultado_T); 
+				file_interfaz_rbo.procesar_I(resultado_I);
+				file_interfaz_rbo.procesar_P(resultado_P);
 				System.out.println("FIN");
 
 			}else {

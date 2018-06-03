@@ -42,7 +42,8 @@ class guardarTxt {
 			PuntosCuenta,
 			PuntosTotalPago,
 			PuntosArt,
-			PuntosPago; 
+			PuntosPago, 
+			nivelSatisfaccion;
 
 double MontoNeto = 0,  
 			Impuesto=0,  
@@ -81,6 +82,7 @@ double MontoNeto = 0,
 			ContratoAbono = resultado.getString("ContratoAbono"); 
 			HoraInicioAux = resultado.getString("HoraInicioAux");
 			HoraFinAux = resultado.getString("HoraFinAux");
+			nivelSatisfaccion = resultado.getInt("nivelSatisfaccion");
 			
 			 lineaEncab = (
 					idBase 
@@ -138,6 +140,8 @@ double MontoNeto = 0,
 							+ tab
 							+ HoraFinAux
 							+ tab
+							+ nivelSatisfaccion
+							+ tab
 					);
 			
 //			System.out.println("Archivo: " + fichero.getAbsolutePath());
@@ -149,13 +153,13 @@ double MontoNeto = 0,
 		return (lineaEncab);
 	}
 					
-	public void procesar_I (ResultSet resultado, String lineaEncab) throws SQLException, IOException {
+	public void procesar_I (ResultSet resultado) throws SQLException, IOException {
 		
 		System.out.println("- > Generando Detalles... "); 
 		
 		fichero = new FileWriter(Main.fileAns, true);
 		pw = new PrintWriter(fichero);
-		
+
 		String d_CodigoBarra = null,
 				  d_Unidad = null,
 				  linea_I = null;
@@ -244,12 +248,12 @@ double MontoNeto = 0,
 		fichero.close();
 	}
 					
-	public void procesar_P (ResultSet resultado, String lineaEncab) throws SQLException, IOException {
+	public void procesar_P (ResultSet resultado) throws SQLException, IOException {
 		System.out.println("- > Generando Pagos... "); 
 		
 		fichero = new FileWriter(Main.fileAns, true);
 		pw = new PrintWriter(fichero);
-		
+
 		int 	p_IdTransaccion = 0, 
 				p_TipoPago=0, 
 				p_PuntosPago = 0,
@@ -285,6 +289,24 @@ double MontoNeto = 0,
 			ImpresoraFiscal = resultado.getString("ImpresoraFiscal");
 			Folio = resultado.getInt("Folio"); 
 			Transaccion = resultado.getString("Transaccion");
+			
+			lineaEncab = (
+					idBase 
+					+ tab 
+					+ Caja 
+					+ tab
+					+ Fecha
+					+ tab 
+					+ IdCajero
+					+ tab
+					+ IdVendedor
+					+ tab
+					+ ImpresoraFiscal
+					+ tab
+					+ Folio
+					+ tab
+					+ Transaccion
+					);
 		
 			linea_P = (
 					lineaEncab
