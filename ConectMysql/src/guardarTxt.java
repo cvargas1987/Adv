@@ -172,7 +172,8 @@ double MontoNeto = 0,
 					d_MontoNeto=0,
 					d_CostoUnd=0;
 			int		d_CantidadUnidad,
-					d_Puntos=0	; 
+					d_Puntos=0	, 
+					d_VendedorPorEstructura=0;
 			
 		while (resultado.next()){
 			d_CodigoBarra = resultado.getString("CodigoBarra");
@@ -185,6 +186,7 @@ double MontoNeto = 0,
 			d_Puntos = resultado.getInt("Puntos");
 			d_Unidad = resultado.getString("Unidad");
 			d_CantidadUnidad = resultado.getInt("CantidadUnidad");
+			d_VendedorPorEstructura = resultado.getInt("VendedorPorEstructura");
 			
 			idBase = resultado.getInt("IdBase");
 			Caja = resultado.getInt("IdCaja");
@@ -239,6 +241,8 @@ double MontoNeto = 0,
 					+ d_Unidad
 					+ tab
 					+ d_CantidadUnidad
+					+ tab
+					+ d_VendedorPorEstructura
 					+ tab);
 			
 			System.out.println(linea_I);
@@ -344,19 +348,98 @@ double MontoNeto = 0,
 		fichero.close();
 //		System.out.println("Archivo: " + fichero.getAbsolutePath());
 	}
+	
+	public void procesar_cupones (ResultSet resultado) throws SQLException, IOException{
+		int IdBase = 0;
+		int IdCupon = 0;
+		int IdCaja = 0; 
+		String Fecha = null;
+		int IdCajero = 0; 
+		String ImpresoraFiscal = null; 
+		int Folio = 0; 
+		double MontoNeto = 0; 
+		int IdCliente = 0; 
+		String ClienteNombre = null; 
+		String FechaProceso = null; 
+		String lineaC = null; 
+		
+		fichero = new FileWriter(Main.fileAns);
+		pw = new PrintWriter(fichero);
+		
+		while (resultado.next()) {
+			IdBase = resultado.getInt("IdBase");
+			IdCupon = resultado.getInt("IdCupon");
+			IdCaja = resultado.getInt("IdCaja");
+			Fecha = resultado.getString("Fecha");
+			IdCajero = resultado.getInt("IdCajero");
+			ImpresoraFiscal = resultado.getString("ImpresoraFiscal");
+			Folio = resultado.getInt("Folio");
+			MontoNeto = resultado.getDouble("MontoNeto");
+			IdCliente = resultado.getInt("IdCliente");
+			ClienteNombre = resultado.getString("ClienteNombre");
+			FechaProceso = resultado.getString("FechaProceso");
+			
+			lineaC = (IdBase 
+						+ tab 
+						+ IdCaja 
+						+ tab
+						+ Fecha
+						+ tab 
+						+ IdCajero
+						+ tab
+						+ "0" //vendedor
+						+ tab
+						+ ImpresoraFiscal
+						+ tab
+						+ Folio
+						+ tab
+						+ IdCupon //det-transaccion, para el caso de cupon de llevar el idCupon.
+						+ tab
+						+ "C" //tipo de registro, para el caso de cupon debe ser C
+						+ tab
+						// hora ini
+						+ tab
+						// hora fin
+						+ tab
+						+ "0"		// monto neto
+						+ tab
+						+ "0"		// impuesto
+						+ tab
+						// id descto
+						+ tab
+						+ "0"		// %descto global
+						+ tab
+						+ IdCliente
+						+ tab
+						+ ClienteNombre
+						+ tab
+						//cliente #tajr
+						+ tab
+						+ "0"		// puntos total
+						+ tab
+						+ "0"		// puntos total cuenta
+						+ tab
+						+ "0"		// puntos total fpago
+						+ tab
+						+ "0"		// puntos total art
+						+ tab
+						+ "0"		// det fpago
+						+ tab
+						// id abono
+						+ tab
+						// hora seg ini
+						+ tab
+						// hora seg fin
+						+ tab
+						);
+			
+			
+			System.out.println(lineaC);
+			pw.println(lineaC);
+		}
+		fichero.close();
+	}
 }
 
-//				pw.println(lineaT);
-//				pw.println(lineaI);
-//				pw.println(lineaP); 
-//			}
-//			
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} 
-//		System.out.println("Archivo: " + fwRuta.getAbsolutePath());
-//	}
-	
-	
-	
+
 	

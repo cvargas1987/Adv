@@ -10,7 +10,7 @@ public class version {
 	}
 	
 	public String consultarVersion () throws IOException {
-		String version = "Version Actual: 1.0.0.8"; 
+		String version = "Version Actual: 1.0.0.11"; 
 		System.out.println(version);
 		System.out.println("V. 1.0.0.1: Salida a Laboratorio");
 		System.out.println("V. 1.0.0.2: Crea interfaz de transacciones T de acuerdo a interfaz DET.*.txt de RBO");
@@ -21,6 +21,8 @@ public class version {
 		System.out.println("V. 1.0.0.7: Corrige error en interfaz de pagos");
 		System.out.println("V. 1.0.0.8: Agrega campo para nivel de Satisfaccion");
 		System.out.println("V. 1.0.0.9: Corrige bug");
+		System.out.println("V. 1.0.0.10: Crea nuvo argumento para apuntar a tabla de cupones.");
+		System.out.println("V. 1.0.0.11: Agrega campo en registro I <VendedorPorEstructura>.");
 		
 		return version;
 	}
