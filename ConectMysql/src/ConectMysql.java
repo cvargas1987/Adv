@@ -42,6 +42,7 @@ public class ConectMysql {
 		try{
 		state = con.createStatement (); 
 		resultado = state.executeQuery(query); 
+		
 		}catch (SQLException e){
 			e.printStackTrace();
 		}

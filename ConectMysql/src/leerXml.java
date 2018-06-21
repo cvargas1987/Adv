@@ -26,7 +26,7 @@ public class leerXml {
     	 try {
             File archivo = new File(nombreArchivo);
             if (archivo.exists()) {
-            	System.out.println("Existe el Archivo <" + nombreArchivo  + ">");
+//            	System.out.println("Existe el Archivo <" + nombreArchivo  + ">");
             	
             	 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                  DocumentBuilder documentBuilder = dbf.newDocumentBuilder();
