@@ -15,8 +15,8 @@ public class leerXml {
 	static String _us = null;
 	static String _pass = null;
 	
-    public static void leer() {
-    	String nombreArchivo = "dato.xml";
+    public static void ejecutar() {
+    	
     			
 //    	ArrayList<datosXml> lista_conexion = new ArrayList <>();
     	//datosXml d= new datosXml();
@@ -24,7 +24,7 @@ public class leerXml {
     	String datos = null; 
     	
     	 try {
-            File archivo = new File(nombreArchivo);
+            File archivo = new File(Main.fileXml);
             if (archivo.exists()) {
 //            	System.out.println("Existe el Archivo <" + nombreArchivo  + ">");
             	
@@ -72,7 +72,7 @@ public class leerXml {
 //                 System.out.println("IP:	" + d.getIp());
 //                 System.out.println("BD:	" + d.getBd()); 
             } else
-            	System.out.println("ERROR: NO Existe el Archivo <" + nombreArchivo + ">");
+            	System.out.println("ERROR: NO Existe el Archivo <" + Main.fileXml + ">");
             	
             	
     	 } catch (Exception e) {

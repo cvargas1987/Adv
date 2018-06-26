@@ -1,7 +1,2 @@
-/ConectMysql.class
-/Main.class
-/datosXml.class
-/fileRespuesta.class
-/guardarTxt.class
-/leerXml.class
-/version.class
+/consultarContado.class
+/consultarCorteZ.class

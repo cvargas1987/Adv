@@ -5,18 +5,12 @@ import java.sql.SQLException;
 import java.sql.Statement; 
 
 public class ConectMysql {
-	Connection con = null; 
+	public static  Connection con = null; 
 	
-	public ConectMysql () {
+	public boolean validarConexion () {
 	
 	String url = "jdbc:mysql://" + leerXml._ip + "/" + leerXml._bd;
-	 
-//	System.out.println("IP: "+_ip);
-//	System.out.println("US: "+_us);
-//	System.out.println("PASS: "+ _pass);
-//	System.out.println("BD: "+_Bd);
-//	System.out.println("URL: "+ url);
-	
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -27,11 +21,14 @@ public class ConectMysql {
 				System.out.println(e);
 			}
 			if (con != null){
-				return; 
+				return true; 
+					
 			}
 		} catch (Exception e){
 			e.printStackTrace();
+			
 		}
+		return false;
 	}
 	
 
@@ -40,7 +37,7 @@ public class ConectMysql {
 		Statement state = null; 
 		ResultSet resultado = null; 
 		try{
-		state = con.createStatement (); 
+		state = ConectMysql.con.createStatement (); 
 		resultado = state.executeQuery(query); 
 		
 		}catch (SQLException e){

@@ -3,36 +3,51 @@ import java.util.ArrayList;
 import java.io.*;
 import java.net.MalformedURLException; 
 
-// args0 = fecha inicial ó v
-// args1 = fecha final
-// args2 = archivo
-// args3 = Tipo de Interfaz 0 = ventas/dev
+// args0 = opciones de busqueda:
+//				 			v = version
+//                           c = valida conexion		
+//                      Folio = busqueda por folio, argumento 5 y 6  
+//					  Fecha = busqueda por fecha, argumento 5 y 6.
+// 			  FechaInicio = busqueda por fecha en controlZ
+//			  FechaFin = busqueda por fecha en controlZ
+//           NumeroZ = busqueda por folio en controlZ
+// args1 = archivo
+// args2 = Tipo de Interfaz 0 = ventas/dev
 //									   1 = cupones
-// args4 = caja, si es valor "0" son todas las cajas. 
+//									   2 = CorteZ contado 
+//									   
+// args3 = caja, si es valor "0" son todas las cajas. 
+// args4 = dato ini
+// args5 = dato fin
 
 public class Main {
-	public static  String fileAns = "";
+	
+	public static String args_opcion = "";
+	public static String args_fileAns = "";
+	public static String args_tipoInterfaz = "";
+	public static String args_caja = "";
+	public static String args_datoIni = "";
+	public static String args_datoFin = "";
+	public static String fileXml = "vtl.xml";
 	
 	public static void main (String [] args) throws SQLException, IOException {
 		
-
-		String respuesta_ = null; 
 		String msnError = null;
+		args_opcion = args[0];
 		fileRespuesta file_respuesta = new fileRespuesta();
-		leerXml xml = new leerXml ();
-		xml.leer();
+		leerXml leerXml = new leerXml ();
+		leerXml.ejecutar();
 		ConectMysql conexion = new ConectMysql ();
 		
-		if (args[0].toLowerCase().equals("v"))
+		if (args_opcion.toLowerCase().equals("v"))
 		{
 			version v = new version();
 			v.consultarVersion();
 			System.exit(0);
 		}
 		
-		if (args[0].toLowerCase().equals("c"))
-		{
-			if (conexion.con == null)
+		if (args_opcion.toLowerCase().equals("c")){
+			if (conexion.validarConexion() == false)
 				System.out.println("ERROR de Conexion");
 			else
 				System.out.println("Conexion EXITOSA");
@@ -40,80 +55,52 @@ public class Main {
 			System.exit(0);
 		}
 		
-		fileAns = args[2]; 
+		
 		if (args.length < 3) {
 			msnError = "ERROR: cantidad invalida de argumentos es menor" + args.length;
 			System.out.println(msnError);
 			System.exit(0);
-		}else if (args.length >5) {
+		}else if (args.length >7) {
 			msnError = "ERROR: cantidad invalida de argumentos  = " + args.length ;
 			System.out.println(msnError);
 			System.exit(0);
 		}
-
-			System.out.println("Parametros: "+args[0] + " " +  args[1 ] + " " +  args[2])  ;			
-							
 			
-			if (conexion.con == null) {
+			args_fileAns = args[1];
+			args_tipoInterfaz = args[2];
+			args_caja = args[3];
+			args_datoIni = args[4];
+			args_datoFin = args[5];
+
+			if (conexion.validarConexion() == false) {
 				String respuesta = ("ERROR de Conexion"); 
 				System.out.println(respuesta);
-				file_respuesta.escribir(args[2], respuesta);
+				file_respuesta.escribir(args_fileAns, respuesta);
 				return; 
 			}
+			
 			guardarTxt file_interfaz_rbo = new guardarTxt();
-			switch (args[3]) {
-				case "0": 
-					System.out.println("Conexion Exitosa ");
-					ResultSet resultado_T ;
-					ResultSet resultado_I ;
-					ResultSet resultado_P ;
-					String encabT = null;
-					System.out.println("Consultado Ventas, espere...");
-							if (!args[4].equals("0")) {  // UNA CAJA ESPECIFICA
-								resultado_T = conexion.getQuery
-								("SELECT * FROM transacciones "
-								+ "WHERE fecha BETWEEN " + "'" + args[0]+ "'" +" AND " + "'" +args[1]+ "'"
-								+ "AND IdCaja = " + "'"+ args[4]+ "'"  
-								+";");
-							}else { //TODAS LAS CAJAS
-								resultado_T = conexion.getQuery
-								("SELECT * FROM transacciones "
-								+ "WHERE fecha BETWEEN " + "'" + args[0]+ "'" +" AND " + "'" +args[1]+ "'"
-								+";");
-							}
-					
-					resultado_I = conexion.getQuery
-							("SELECT * FROM transacciones "
-							+ "INNER JOIN detalletransacciones "
-							+ "ON transacciones.IdTransaccion = detalletransacciones.IdTransaccion "
-							+ "WHERE fecha BETWEEN " + "'" + args[0]+ "'" +" AND " + "'" +args[1]+ "'"+";");
-					
-					resultado_P = conexion.getQuery
-							("SELECT * FROM transacciones "
-							+ "INNER JOIN formapago "
-							+ "ON transacciones.IdTransaccion = formapago.IdTransaccion "
-							+ "WHERE fecha BETWEEN " + "'" + args[0]+ "'" +" AND " + "'" +args[1]+ "'"+";");
-					
-						if (resultado_T.next()) {
-							file_interfaz_rbo.procesarT(resultado_T); 
-							file_interfaz_rbo.procesar_I(resultado_I);
-							file_interfaz_rbo.procesar_P(resultado_P);
-							System.out.println("FIN");
-						}else {
-							System.out.println("Sin Datos");
-						}
-							
-					
-						
+			switch (args_tipoInterfaz) {
+				case "0": //Ventas/dev de contado
+					System.out.println("Consultado Ventas y Dev Contado, espere...");
+					consultarContado consultarContado = new consultarContado (); 
+					consultarContado.ejecutar();
 					break; 
 				
-				case "1":
+				case "1": // Cupones
 					System.out.println("Consultado Cupones, espere...");
 					ResultSet resultado_cupones;
-					resultado_cupones = conexion.getQuery("SELECT * FROM cupones WHERE fecha BETWEEN " + "'" + args[0]+ "'" +" AND " + "'" +args[1]+ "'"+";");
+					resultado_cupones = conexion.getQuery("SELECT * FROM cupones WHERE fecha BETWEEN " + "'" + args_datoIni+ "'" +" AND " + "'" +args[1]+ "'"+";");
 					file_interfaz_rbo.procesar_cupones(resultado_cupones);
 					System.out.println("FIN");
 					break;
+					
+				case "2": // Corte Z contado  
+					System.out.println("Consultado controlZ, espere...");
+					consultarCorteZ consultarCorteZ = new consultarCorteZ();
+					consultarCorteZ.ejecutar();
+					break;
+						
 			}
 	}
 }
