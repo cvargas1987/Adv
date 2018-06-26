@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="jdbc.controlador">com.mysql.jdbc.Driver</entry>
+	<entry key="jdbc.servidor">jdbc:mysql://10.0.0.210/ventaslinea</entry>
+	<entry key="jdbc.usuario">root</entry>
+	<entry key="jdbc.clave">adv</entry>
+	
+	<entry key="jdbcSQL.controlador">com.microsoft.sqlserver.jdbc.SQLServerDriver</entry>
+	<entry key="jdbcSQL.servidor">jdbc:sqlserver://10.0.0.90;DATABASENAME=RetailClub;sendStringParametersAsUnicode=false;SelectMethod=direct</entry>	
+	<entry key="jdbcSQL.usuario">sa</entry>
+	<entry key="jdbcSQL.clave">adv</entry>
+	<entry key="jdbc.Compania">1</entry>
+	<entry key="jdbc.Base">1</entry>
+	<entry key="jdbc.Max_FilePending">1</entry>
+	
+</properties>
