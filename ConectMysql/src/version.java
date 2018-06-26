@@ -10,7 +10,7 @@ public class version {
 	}
 	
 	public String consultarVersion () throws IOException {
-		String version = "Version Actual: 1.0.0.13"; 
+		String version = "Version Actual: 1.0.0.12"; 
 		System.out.println(version);
 		System.out.println("V. 1.0.0.1: Salida a Laboratorio");
 		System.out.println("V. 1.0.0.2: Crea interfaz de transacciones T de acuerdo a interfaz DET.*.txt de RBO");
