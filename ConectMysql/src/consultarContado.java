@@ -17,30 +17,20 @@ public class consultarContado {
 		ResultSet resultado_I ;
 		ResultSet resultado_P ;
 		String encabT = null;
-
-				if (Main.args_caja.equals("0")) {  // Busqueda en todas las cajas
-					query_T =("SELECT * FROM transacciones "
-							+ "WHERE "+ Main.args_opcion +" BETWEEN " + "'" + Main.args_datoIni+ "'" +" AND " + "'" +Main.args_datoFin+ "'"
-							+";");
-					
-				}else { //Busqueda en una sola caja
-					query_T = ("SELECT * FROM transacciones "
-								+ "WHERE " + Main.args_opcion + " BETWEEN " + "'" + Main.args_datoIni+ "'" +" AND " + "'" +Main.args_datoFin+ "'"
-								+ "AND IdCaja = " + "'"+ Main.args_caja+ "'"  
-								+";");
-				}
 		
-		query_I = ("SELECT * FROM transacciones "
-					+ "INNER JOIN detalletransacciones "
-					+ "ON transacciones.IdTransaccion = detalletransacciones.IdTransaccion "
-					+ "WHERE " + Main.args_opcion + " BETWEEN " + "'" + Main.args_datoIni+ "'" +" AND " + "'" +Main.args_datoFin+ "'"+";");
-
-		query_P =("SELECT * FROM transacciones "
-					+ "INNER JOIN formapago "
-					+ "ON transacciones.IdTransaccion = formapago.IdTransaccion "
-					+ "WHERE " +  Main.args_opcion + " BETWEEN " + "'" + Main.args_datoIni+ "'" +" AND " + "'" +Main.args_datoFin+ "'"+";");
+		if (Main.args_opcion.equals("fecha")) {
+			query_T =("CALL SelectTFecha (" + "'" + Main.args_datoIni + "'" + "," + "'" + Main.args_datoFin + "'" + ")");
+			query_I = ("CALL SelectTFechaInnerDet (" + "'" +Main.args_datoIni + "'" +"," + "'" + Main.args_datoFin + "'" + ")");
+			query_P =("CALL SelectTFechaInnerPago (" +"'" + Main.args_datoIni + "'" +","+ "'" + Main.args_datoFin + "'" + ")");
+		}
+		if (Main.args_opcion.equals("folio")) {
+			query_T =("CALL SelectTFolio (" + "'" + Main.args_datoIni + "'"+"," + "'" + Main.args_datoFin + "'" + ")");
+			query_I = ("CALL SelectTFolioInnerDet (" + "'" +Main.args_datoIni + "'" +","+ "'" + Main.args_datoFin + "'" + ")");
+			query_P =("CALL SelectTFolioInnerPago (" +"'" + Main.args_datoIni + "'" +","+ "'" + Main.args_datoFin + "'" + ")");
+		}
+			
 		
-		System.out.println("Consultado, espere...");
+		System.out.println("Consultando, espere...");
 		resultado_T = conexion.getQuery(query_T);
 		if (resultado_T.next()) {
 			resultado_T = conexion.getQuery(query_T);
@@ -51,7 +41,11 @@ public class consultarContado {
 			file_interfaz_rbo.procesar_I(resultado_I);
 			file_interfaz_rbo.procesar_P(resultado_P);
 		}else {
+			escribirTexto e = new escribirTexto (); 
+			e.ejecutar("Sin Datos");
+			
 			System.out.println("Sin Datos");
+			
 		}
 		System.out.println("Fin Proceso");
 	}

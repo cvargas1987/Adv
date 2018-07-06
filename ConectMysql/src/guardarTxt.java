@@ -176,26 +176,27 @@ double MontoNeto = 0,
 					d_VendedorPorEstructura=0;
 			
 		while (resultado.next()){
-			d_CodigoBarra = resultado.getString("CodigoBarra");
-			d_Cantidad = resultado.getDouble("Cantidad");
-			d_PrecioPos = resultado.getDouble("PrecioPos");
-			d_PorDesctoLinea = resultado.getDouble("PorDesctoLinea");
-			d_MontoDescto = resultado.getDouble("MontoDescto");
-			d_MontoNeto = resultado.getDouble("MontoNeto");
-			d_CostoUnd = resultado.getDouble("CostoUnd");
-			d_Puntos = resultado.getInt("Puntos");
-			d_Unidad = resultado.getString("Unidad");
-			d_CantidadUnidad = resultado.getInt("CantidadUnidad");
-			d_VendedorPorEstructura = resultado.getInt("VendedorPorEstructura");
+			d_CodigoBarra = resultado.getString("d.CodigoBarra");
+			d_Cantidad = resultado.getDouble("d.Cantidad");
+			d_Precio = resultado.getDouble("d.Precio"); 
+			d_PrecioPos = resultado.getDouble("d.PrecioPos");
+			d_PorDesctoLinea = resultado.getDouble("d.PorDesctoLinea");
+			d_MontoDescto = resultado.getDouble("d.MontoDescto");
+			d_MontoNeto = resultado.getDouble("d.MontoNeto");
+			d_CostoUnd = resultado.getDouble("d.CostoUnd");
+			d_Puntos = resultado.getInt("d.Puntos");
+			d_Unidad = resultado.getString("d.Unidad");
+			d_CantidadUnidad = resultado.getInt("d.CantidadUnidad");
+			d_VendedorPorEstructura = resultado.getInt("d.VendedorPorEstructura");
 			
-			idBase = resultado.getInt("IdBase");
-			Caja = resultado.getInt("IdCaja");
-			Fecha = resultado.getString("Fecha");
-			IdCajero = resultado.getInt("IdCajero");
-			IdVendedor = resultado.getInt("IdVendedor");
-			ImpresoraFiscal = resultado.getString("ImpresoraFiscal");
-			Folio = resultado.getInt("Folio"); 
-			Transaccion = resultado.getString("Transaccion");
+			idBase = resultado.getInt("t.IdBase");
+			Caja = resultado.getInt("t.IdCaja");
+			Fecha = resultado.getString("t.Fecha");
+			IdCajero = resultado.getInt("t.IdCajero");
+			IdVendedor = resultado.getInt("t.IdVendedor");
+			ImpresoraFiscal = resultado.getString("t.ImpresoraFiscal");
+			Folio = resultado.getInt("t.Folio"); 
+			Transaccion = resultado.getString("t.Transaccion");
 
 			lineaEncab = (
 					idBase 

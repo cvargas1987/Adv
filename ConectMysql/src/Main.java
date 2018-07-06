@@ -6,8 +6,8 @@ import java.net.MalformedURLException;
 // args0 = opciones de busqueda:
 //				 			v = version
 //                           c = valida conexion		
-//                      Folio = busqueda por folio, argumento 5 y 6  
-//					  Fecha = busqueda por fecha, argumento 5 y 6.
+//                      folio = busqueda por folio, argumento 5 y 6  
+//					    fecha = busqueda por fecha, argumento 5 y 6.
 // 			  FechaInicio = busqueda por fecha en controlZ
 //			  FechaFin = busqueda por fecha en controlZ
 //           NumeroZ = busqueda por folio en controlZ
@@ -16,7 +16,7 @@ import java.net.MalformedURLException;
 //									   1 = cupones
 //									   2 = CorteZ contado 
 //									   
-// args3 = caja, si es valor "0" son todas las cajas. 
+// args3 = No. de Caja, solo se usa para cuando se busca una Z.  
 // args4 = dato ini
 // args5 = dato fin
 
@@ -33,7 +33,8 @@ public class Main {
 	public static void main (String [] args) throws SQLException, IOException {
 		
 		String msnError = null;
-		args_opcion = args[0];
+		args_opcion = args[0].toLowerCase();
+		
 		fileRespuesta file_respuesta = new fileRespuesta();
 		leerXml leerXml = new leerXml ();
 		leerXml.ejecutar();
@@ -68,7 +69,7 @@ public class Main {
 			
 			args_fileAns = args[1];
 			args_tipoInterfaz = args[2];
-			args_caja = args[3];
+			args_caja = args[3]; 
 			args_datoIni = args[4];
 			args_datoFin = args[5];
 
